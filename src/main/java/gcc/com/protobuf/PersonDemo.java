@@ -1,7 +1,7 @@
 package gcc.com.protobuf;
 
 
-import gcc.com.models.person.Person;
+import gcc.com.models.Person;
 
 public class PersonDemo {
 

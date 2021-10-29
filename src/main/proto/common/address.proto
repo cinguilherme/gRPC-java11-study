@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package common;
+
+option java_multiple_files = true;
+option java_generate_equals_and_hash = true;
+option java_package = "gcc.com.models";
+
+message Address {
+  string street = 1;
+  string zipcode = 2;
+}

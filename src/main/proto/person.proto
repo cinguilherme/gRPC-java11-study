@@ -1,25 +1,19 @@
 syntax = "proto3";
 
+import "common/car.proto";
+import "common/address.proto";
+
 option java_multiple_files = true;
 option java_generate_equals_and_hash = true;
-option java_package = "gcc.com.models.person";
+option java_package = "gcc.com.models";
+
 
 message Person {
   string name = 1;
   int32 age = 2;
   repeated int32 favoriteNumbers = 3;
   repeated string tags = 4;
-  Address address = 5;
-  repeated Car cars = 6;
+  common.Address address = 5;
+  repeated common.Car cars = 6;
 }
 
-message Car {
-  string model = 1;
-  int32 year = 2;
-  string style = 3;
-}
-
-message Address {
-  string street = 1;
-  string zipcode = 2;
-}

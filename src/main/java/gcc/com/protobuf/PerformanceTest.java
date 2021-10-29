@@ -3,9 +3,9 @@ package gcc.com.protobuf;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.InvalidProtocolBufferException;
 import gcc.com.json.JPerson;
-import gcc.com.models.person.Address;
-import gcc.com.models.person.Car;
-import gcc.com.models.person.Person;
+import gcc.com.models.Address;
+import gcc.com.models.Car;
+import gcc.com.models.Person;
 
 import java.util.List;
 
