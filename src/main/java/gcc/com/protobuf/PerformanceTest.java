@@ -2,11 +2,11 @@ package gcc.com.protobuf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.InvalidProtocolBufferException;
-
 import gcc.com.json.JPerson;
+import gcc.com.models.person.Address;
+import gcc.com.models.person.Car;
 import gcc.com.models.person.Person;
 
-import java.io.IOException;
 import java.util.List;
 
 public class PerformanceTest {
@@ -20,12 +20,8 @@ public class PerformanceTest {
         List<Integer> favoriteNums = new java.util.ArrayList<>();
         favoriteNums.add(1);
         favoriteNums.add(4);
-        favoriteNums.add(6);
-        favoriteNums.add(7);
         jp.setFavoriteNums(favoriteNums);
         List<String> favoriteNums2 = new java.util.ArrayList<>();
-        favoriteNums2.add("String");
-        favoriteNums2.add("String");
         favoriteNums2.add("String");
         favoriteNums2.add("String");
         jp.setTags(favoriteNums2);
@@ -44,13 +40,18 @@ public class PerformanceTest {
                 .setAge(34)
                 .setName("Person PROTO");
         person_proto.addTags("Frame");
-        person_proto.addTags("Frame");
-        person_proto.addTags("Gene");
+        person_proto.addCars(Car.newBuilder()
+                                     .setModel("A3")
+                                     .setYear(2012)
+                                     .setStyle("COUPE")
+                                     .build());
+        person_proto.setAddress(Address.newBuilder()
+                                        .setStreet("Almirante tamandare")
+                                        .setZipcode("51030090")
+                                        .build());
         person_proto.addFavoriteNumbers(7);
-        person_proto.addFavoriteNumbers(14);
         Person p = person_proto.build();
 
-        System.out.println(p);
         //protobuf
         Runnable runnableProto = () -> {
             byte[] bytes = p.toByteArray();
@@ -70,7 +71,7 @@ public class PerformanceTest {
 
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < 2_000_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             runnableTest.run();
         }
 

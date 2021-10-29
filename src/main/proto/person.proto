@@ -9,4 +9,17 @@ message Person {
   int32 age = 2;
   repeated int32 favoriteNumbers = 3;
   repeated string tags = 4;
+  Address address = 5;
+  repeated Car cars = 6;
+}
+
+message Car {
+  string model = 1;
+  int32 year = 2;
+  string style = 3;
+}
+
+message Address {
+  string street = 1;
+  string zipcode = 2;
 }
