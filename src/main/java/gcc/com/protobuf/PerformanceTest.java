@@ -1,6 +1,7 @@
 package gcc.com.protobuf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.protobuf.Int32Value;
 import com.google.protobuf.InvalidProtocolBufferException;
 import gcc.com.json.JPerson;
 import gcc.com.models.Address;
@@ -17,19 +18,12 @@ public class PerformanceTest {
         JPerson jp = new JPerson();
         jp.setAge(34);
         jp.setName("Fred JSON");
-        List<Integer> favoriteNums = new java.util.ArrayList<>();
-        favoriteNums.add(1);
-        favoriteNums.add(4);
-        jp.setFavoriteNums(favoriteNums);
-        List<String> favoriteNums2 = new java.util.ArrayList<>();
-        favoriteNums2.add("String");
-        favoriteNums2.add("String");
-        jp.setTags(favoriteNums2);
         ObjectMapper mapper = new ObjectMapper();
         Runnable runnableJson = () -> {
             byte[] bytes = new byte[0];
             try {
                 bytes = mapper.writeValueAsBytes(jp);
+                System.out.println("JSON byteArray size: " + bytes.length);
                 JPerson jPerson = mapper.readValue(bytes, JPerson.class);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -37,24 +31,17 @@ public class PerformanceTest {
         };
 
         Person.Builder person_proto = Person.newBuilder()
-                .setAge(34)
+                .setAge(Int32Value.newBuilder()
+                                .setValue(34)
+                                .build())
                 .setName("Person PROTO");
-        person_proto.addTags("Frame");
-        person_proto.addCars(Car.newBuilder()
-                                     .setModel("A3")
-                                     .setYear(2012)
-                                     .setStyle("COUPE")
-                                     .build());
-        person_proto.setAddress(Address.newBuilder()
-                                        .setStreet("Almirante tamandare")
-                                        .setZipcode("51030090")
-                                        .build());
-        person_proto.addFavoriteNumbers(7);
+
         Person p = person_proto.build();
 
         //protobuf
         Runnable runnableProto = () -> {
             byte[] bytes = p.toByteArray();
+            System.out.println("PROTO byteArray size: " + bytes.length);
             try {
                 Person sam = Person.parseFrom(bytes);
             } catch (InvalidProtocolBufferException e) {
@@ -71,7 +58,7 @@ public class PerformanceTest {
 
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < 1_000_000; i++) {
+        for (int i = 0; i < 1; i++) {
             runnableTest.run();
         }
 

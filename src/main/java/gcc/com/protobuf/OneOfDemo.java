@@ -29,6 +29,16 @@ public class OneOfDemo {
     }
 
     private static void loggin(Credentials credentials) {
+
+        switch (credentials.getModeCase()) {
+            case EMAILMODE:
+                System.out.println("Email Mode Detected");
+                break;
+            case PHONEMODE:
+                System.out.println("Phone Mode Detected");
+                break;
+        }
+
         System.out.println(credentials);
     }
 }
